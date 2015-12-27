@@ -79,11 +79,11 @@ Player.prototype.update = function () {
 
 };
 
-Player.prototype.reset = function (collitsion) {
+Player.prototype.reset = function (collision) {
     
     this.x = this.orgLocation.x;
     this.y = this.orgLocation.y;
-    if(collitsion)
+    if(collision)
         score.innerText = Number(score.innerText) - 5;
     else
         score.innerText = Number(score.innerText) + 5;
