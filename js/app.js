@@ -85,9 +85,9 @@ Player.prototype.reset = function (collision) {
     this.x = this.orgLocation.x;
     this.y = this.orgLocation.y;
     if(collision)
-        score.innerText = Number(score.innerText) - 5;
+        score.innerHTML = parseInt(score.innerHTML) - 5;
     else
-        score.innerText = Number(score.innerText) + 5;
+        score.innerHTML = parseInt(score.innerHTML) + 5;
 }
 
 // Now instantiate your objects.
