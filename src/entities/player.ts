@@ -1,4 +1,4 @@
-import { IEntity, Direction } from '../types';
+import { IEntity, Direction, CharacterDefinition } from '../types';
 import { Resources } from '../resources';
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../constants';
 
@@ -9,13 +9,20 @@ export class Player implements IEntity {
 
   private readonly originX: number;
   private readonly originY: number;
-  private readonly sprite = 'images/char-princess-girl.png';
+  private readonly sprite: string;
+  private readonly moveSpeed: number;
+  private freeCollisionAvailable: boolean;
+  readonly collisionReduction: number;
 
-  constructor(x: number, y: number) {
+  constructor(x: number, y: number, character: CharacterDefinition) {
     this.x = x;
     this.y = y;
     this.originX = x;
     this.originY = y;
+    this.sprite = character.sprite;
+    this.moveSpeed = Math.round(100 * character.passive.speedMultiplier);
+    this.freeCollisionAvailable = character.passive.freeCollision;
+    this.collisionReduction = character.passive.collisionReduction;
   }
 
   update(_dt: number): void {
@@ -32,10 +39,10 @@ export class Player implements IEntity {
   handleInput(key: Direction): void {
     switch (key) {
       case Direction.Left:
-        if (this.x - 80 > 0) this.x -= 100;
+        if (this.x - 80 > 0) this.x -= this.moveSpeed;
         break;
       case Direction.Right:
-        if (CANVAS_WIDTH - this.x > 200) this.x += 100;
+        if (CANVAS_WIDTH - this.x > 200) this.x += this.moveSpeed;
         break;
       case Direction.Up:
         this.y -= 90;
@@ -47,6 +54,13 @@ export class Player implements IEntity {
   }
 
   reset(collision: boolean): void {
+    if (collision && this.freeCollisionAvailable) {
+      this.freeCollisionAvailable = false;
+      this.x = this.originX;
+      this.y = this.originY;
+      return;
+    }
+
     this.x = this.originX;
     this.y = this.originY;
     this.score += collision ? -5 : 5;

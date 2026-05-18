@@ -9,3 +9,26 @@ export enum Direction {
   Up = 'up',
   Down = 'down',
 }
+
+export enum CharacterType {
+  Princess = 'princess',
+  Boy = 'boy',
+  CatGirl = 'cat-girl',
+  HornGirl = 'horn-girl',
+  PinkGirl = 'pink-girl',
+}
+
+export interface CharacterPassive {
+  speedMultiplier: number;
+  freeCollision: boolean;
+  collisionReduction: number;
+  showEnemyPaths: boolean;
+}
+
+export interface CharacterDefinition {
+  type: CharacterType;
+  name: string;
+  sprite: string;
+  passiveLabel: string;
+  passive: CharacterPassive;
+}
