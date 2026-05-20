@@ -9,7 +9,7 @@ import {
   NUM_ROWS,
   NUM_COLS,
   COLLISION_THRESHOLD,
-} from './constants';
+} from './constants'; 
 
 const ROW_IMAGES = [
   'images/water-block.png',
